@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewStub;
@@ -27,9 +28,10 @@ import com.zly.www.easyrecyclerview.ptrlib.PtrUIHandler;
 
 public class EasyRecyclerView extends FrameLayout {
 
+    private final String TAG = getClass().getSimpleName();
     //Erv属性
     private int mNumLoadMore;//最后可见条目 + mNumLoadMore > total 触发加载更多
-    private boolean mEnableLoadMore;
+    private boolean mEnableLoadMore;//是否允许加载更多
 
     //Ptr属性
     private float mResistance;
@@ -40,7 +42,8 @@ public class EasyRecyclerView extends FrameLayout {
     private boolean mPullToRefresh;
 
     private boolean mLoadingMore = false;
-
+    private boolean mReviseMovePoi = false;//是否需要修正滑动位置
+    private int mMovePoi = 0;
 
     private PtrClassicFrameLayout mPtrFrame;
     private RecyclerView mRecyclerView;
@@ -74,7 +77,7 @@ public class EasyRecyclerView extends FrameLayout {
         //初始化Erv
         mNumLoadMore = ErvAttr.getInteger(R.styleable.EasyRecyclerView_number_load_more, 4);
         mEnableLoadMore = ErvAttr.getBoolean(R.styleable.EasyRecyclerView_enable_load_more, true);
-        mEmptyRes = ErvAttr.getResourceId(R.styleable.EasyRecyclerView_emply_layout,0);
+        mEmptyRes = ErvAttr.getResourceId(R.styleable.EasyRecyclerView_emply_layout, 0);
 
         //初始化Ptr
         mResistance = PtrAttr.getFloat(R.styleable.PtrFrameLayout_ptr_resistance, 1.7f);
@@ -94,7 +97,7 @@ public class EasyRecyclerView extends FrameLayout {
         mRecyclerView = (RecyclerView) view.findViewById(R.id.list);
         mStubEmpty = (ViewStub) view.findViewById(R.id.stubEmpty);
 
-        if(mEmptyRes != 0){
+        if (mEmptyRes != 0) {//加载没有数据状态下布局
             mStubEmpty.setLayoutResource(mEmptyRes);
             mEmptyView = mStubEmpty.inflate();
         }
@@ -133,13 +136,14 @@ public class EasyRecyclerView extends FrameLayout {
 
 
     private void initRecyclerView() {
+        mRecyclerView.addOnScrollListener(new ReviseMoveListener());
         mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
-                if (mRecyclerView.getAdapter() != null && mRecyclerView.getLayoutManager() != null && mEnableLoadMore) {
+                if (mRecyclerView.getAdapter() != null && getLayoutManager() != null && mEnableLoadMore) {
                     int itemCount = mRecyclerView.getAdapter().getItemCount();
-                    int lastVisibleItemPosition = LayoutManagerUtil.getLastVisibleItemPosition(mRecyclerView.getLayoutManager());
+                    int lastVisibleItemPosition = LayoutManagerUtil.getLastVisibleItemPosition(getLayoutManager());
                     if (dy > 0 && itemCount != 0 && lastVisibleItemPosition + mNumLoadMore > itemCount - 1 &&
                             !mLoadingMore && mLoadUIHandler.getState() == ErvLoadUIHandle.LOAD) {
                         mLoadingMore = true;
@@ -209,10 +213,10 @@ public class EasyRecyclerView extends FrameLayout {
             private void dataComplete() {
                 refreshComplete();
                 loadComplete();
-                if(mEmptyView != null){
-                    if(mAdapter.getItemCount() == 0){
+                if (mEmptyView != null) {
+                    if (mAdapter.getItemCount() == 0) {
                         showEmptyView();
-                    }else{
+                    } else {
                         hideEmptyView();
                     }
                 }
@@ -223,12 +227,12 @@ public class EasyRecyclerView extends FrameLayout {
         addFooter();
     }
 
-    public void showEmptyView(){
+    public void showEmptyView() {
         mRecyclerView.setVisibility(View.GONE);
         mStubEmpty.setVisibility(View.VISIBLE);
     }
 
-    public void hideEmptyView(){
+    public void hideEmptyView() {
         mRecyclerView.setVisibility(View.VISIBLE);
         mStubEmpty.setVisibility(View.GONE);
     }
@@ -248,7 +252,7 @@ public class EasyRecyclerView extends FrameLayout {
         }
     }
 
-    public void removeFooter(){
+    public void removeFooter() {
         if (mAdapter != null) {
             mAdapter.removeFooter();
         }
@@ -305,6 +309,10 @@ public class EasyRecyclerView extends FrameLayout {
         return mRecyclerView;
     }
 
+    public RecyclerView.LayoutManager getLayoutManager() {
+        return mRecyclerView.getLayoutManager();
+    }
+
     public void refreshComplete() {
         mPtrFrame.refreshComplete();
     }
@@ -321,9 +329,78 @@ public class EasyRecyclerView extends FrameLayout {
         this.mOnLoadListener = listener;
     }
 
-    public void setOnEmptyViewClick(OnClickListener listener){
-        if(mEmptyView != null){
+    public void setOnEmptyViewClick(OnClickListener listener) {
+        if (mEmptyView != null) {
             mEmptyView.setOnClickListener(listener);
         }
     }
+
+
+    public void move(int position) {
+        move(position, true);
+    }
+
+    public void move(int position, boolean isSmooth) {
+        if (position < 0 || position >= mAdapter.getItemCount()) {
+            Log.e(TAG,"move positon error");
+            return;
+        }
+        mMovePoi = position;
+
+        if (isSmooth) {
+            smoothScrollPosition(position);
+        } else {
+            scrollPosition(position);
+        }
+    }
+
+
+    private void scrollPosition(int position) {
+        int firstVisibleItemPosition = LayoutManagerUtil.getFirstVisibleItemPosition(getLayoutManager());
+        int lastVisibleItemPosition = LayoutManagerUtil.getLastVisibleItemPosition(getLayoutManager());
+
+        if (position < firstVisibleItemPosition) {
+            mRecyclerView.scrollToPosition(position);
+        } else if (position < lastVisibleItemPosition) {
+            int top = mRecyclerView.getChildAt(position - firstVisibleItemPosition).getTop();
+            mRecyclerView.scrollBy(0, top);
+        } else {
+            mReviseMovePoi = true;
+            mRecyclerView.smoothScrollToPosition(position);
+        }
+    }
+
+    private void smoothScrollPosition(int position) {
+        int firstVisibleItemPosition = LayoutManagerUtil.getFirstVisibleItemPosition(getLayoutManager());
+        int lastVisibleItemPosition = LayoutManagerUtil.getLastVisibleItemPosition(getLayoutManager());
+
+        if (position < firstVisibleItemPosition) {
+            mRecyclerView.smoothScrollToPosition(position);
+        } else if (position < lastVisibleItemPosition) {
+            int top = mRecyclerView.getChildAt(position - firstVisibleItemPosition).getTop();
+            mRecyclerView.smoothScrollBy(0, top);
+        } else {
+            mReviseMovePoi = true;
+            mRecyclerView.smoothScrollToPosition(position);
+        }
+    }
+
+    class ReviseMoveListener extends RecyclerView.OnScrollListener{
+        @Override
+        public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+            if(mReviseMovePoi && newState == RecyclerView.SCROLL_STATE_IDLE){
+                mReviseMovePoi = false;
+                int n = mMovePoi - LayoutManagerUtil.getFirstVisibleItemPosition(getLayoutManager());
+                if(n >= 0 && n < mRecyclerView.getChildCount()){
+                    int top = mRecyclerView.getChildAt(n).getTop();
+                    mRecyclerView.scrollBy(0, top);
+                }
+            }
+        }
+
+        @Override
+        public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+        }
+    }
+
 }
