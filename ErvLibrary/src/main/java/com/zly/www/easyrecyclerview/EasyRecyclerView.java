@@ -243,7 +243,7 @@ public class EasyRecyclerView extends FrameLayout {
     }
 
     private void addFooter() {
-        if (mAdapter != null && mFooterView != null) {
+        if (mAdapter != null && mFooterView != null && mEnableLoadMore) {
             mAdapter.setFooter(mFooterView);
         }
     }
