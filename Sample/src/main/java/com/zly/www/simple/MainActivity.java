@@ -33,7 +33,8 @@ public class MainActivity extends AppCompatActivity implements OnRefreshListener
             @Override
             public void run() {
                 for (int i = 10; i > 0; i--) {
-                    rvAdapter.addData("最新数据+" + i,0);
+                    rvAdapter.addData(0,"最新数据+" + i);
+                    erv.getRecyclerView().scrollToPosition(0);
                 }
             }
         }, 3000);

@@ -28,7 +28,7 @@ public class RvAdapter extends NormalAdapter<String, RvAdapter.ViewHolder> {
     class ViewHolder extends BaseViewHolder {
         TextView tv;
 
-        public ViewHolder(View itemView) {
+        ViewHolder(View itemView) {
             super(itemView);
             tv = (TextView) itemView.findViewById(R.id.tv);
         }
