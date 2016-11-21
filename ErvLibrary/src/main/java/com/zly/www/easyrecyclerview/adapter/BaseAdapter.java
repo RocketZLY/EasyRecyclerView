@@ -63,15 +63,10 @@ public abstract class BaseAdapter<T, VH extends BaseViewHolder> extends Recycler
     }
 
     public void addData(T t) {
-        if (mList == null)
-            mList = new ArrayList<>();
-
-        mList.add(t);
-        notifyItemInserted(getItemCount() - 1);
-
+        addData(getItemCount() - 1, t);
     }
 
-    public void addData(T t, int position) {
+    public void addData(int position, T t) {
         if (mList == null)
             mList = new ArrayList<>();
 
@@ -80,19 +75,33 @@ public abstract class BaseAdapter<T, VH extends BaseViewHolder> extends Recycler
     }
 
     public void addDatas(List<T> list) {
-        if (mList == null)
-            mList = new ArrayList<>();
-
-        mList.addAll(list);
-        notifyItemRangeInserted(getItemCount() - 1, list.size());
+        addDatas(getItemCount() - 1, list);
     }
 
-    public void addDatas(List<T> list,int position) {
+    public void addDatas(int position, List<T> list) {
         if (mList == null)
             mList = new ArrayList<>();
 
-        mList.addAll(list);
+        mList.addAll(position, list);
         notifyItemRangeInserted(position, list.size());
+    }
+
+    public void removeData(int position) {
+        if (mList != null) {
+            mList.remove(position);
+            notifyItemRemoved(position);
+        }
+    }
+
+    public void removeData(T t) {
+        removeData(mList.indexOf(t));
+    }
+
+    public void removeData(List<T> t) {
+        if (mList != null) {
+            mList.removeAll(t);
+            notifyDataSetChanged();
+        }
     }
 
 
