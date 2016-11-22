@@ -1,6 +1,9 @@
 package com.zly.www.easyrecyclerview.adapter;
 
+import android.content.Context;
+import android.support.annotation.LayoutRes;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -21,6 +24,7 @@ public abstract class BaseAdapter<T, VH extends BaseViewHolder> extends Recycler
 
     private View mFooter;
     private List<T> mList;
+    private Context mContext;
 
     @Override
     public int getItemCount() {
@@ -29,6 +33,9 @@ public abstract class BaseAdapter<T, VH extends BaseViewHolder> extends Recycler
 
     @Override
     public BaseViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        if (mContext == null)
+            mContext = parent.getContext();
+
         if (viewType == TYPE_FOOTER) {
             return new FooterViewHolder(mFooter);
         }
@@ -39,6 +46,14 @@ public abstract class BaseAdapter<T, VH extends BaseViewHolder> extends Recycler
     public void onBindViewHolder(BaseViewHolder holder, int position) {
         if (getItemViewType(position) != TYPE_FOOTER)
             bindCustomViewHolder((VH) holder, mList.get(position), position);
+    }
+
+    public View inflateView(@LayoutRes int resId, ViewGroup parent) {
+        return LayoutInflater.from(mContext).inflate(resId, parent, false);
+    }
+
+    public Context getContext() {
+        return mContext;
     }
 
     public View getFooter() {

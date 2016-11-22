@@ -1,6 +1,5 @@
 package com.zly.www.simple;
 
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -17,7 +16,7 @@ public class RvAdapter extends NormalAdapter<String, RvAdapter.ViewHolder> {
 
     @Override
     public ViewHolder createCustomViewHolder(ViewGroup parent, int viewType) {
-        return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_test, parent, false));
+        return new ViewHolder(inflateView(R.layout.item_test, parent));
     }
 
     @Override
