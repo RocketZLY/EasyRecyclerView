@@ -1,8 +1,7 @@
 EasyRecyclerView
 =======
-### **描述**
-
----------------
+**描述**
+=======
 这是一个下拉刷新上拉加载更多框架,头部用的秋哥的[android-Ultra-Pull-To-Refresh](https://github.com/liaohuqiu/android-Ultra-Pull-To-Refresh),底部和没有数据的状态自己实现的.其实刚刚开始我是想找个库直接用的,试了几个排名靠前的,感觉跟自己想要的不太一样,索性自己写了一个,当然这当中也遇到了问题,多亏[仲锦大师](https://github.com/chenzj-king)的帮助在此感谢.
 
 特点:
