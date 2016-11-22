@@ -1,7 +1,6 @@
-EasyRecyclerView
-=======
-**描述**
-=======
+#EasyRecyclerView
+
+##**描述**
 这是一个下拉刷新上拉加载更多框架,头部用的秋哥的[android-Ultra-Pull-To-Refresh](https://github.com/liaohuqiu/android-Ultra-Pull-To-Refresh),底部和没有数据的状态自己实现的.其实刚刚开始我是想找个库直接用的,试了几个排名靠前的,感觉跟自己想要的不太一样,索性自己写了一个,当然这当中也遇到了问题,多亏[仲锦大师](https://github.com/chenzj-king)的帮助在此感谢.
 
 特点:
@@ -9,15 +8,11 @@ EasyRecyclerView
 - 可定制的底部 (加载中/没有数据/加载失败 三种状态的定制)
 - 可定制的没有数据时候的显示 (目前只有一个状态 还在扩展)
 
-### **效果预览**
-
----------------
+## **效果预览**
 ![](http://of1ktyksz.bkt.clouddn.com/EasyRecyclerView.gif)
 
-### **使用**
-
----------------
-**1.使用默认头部和底部实现的EasyDefRecyclerView**
+## **使用**
+###**1.使用默认头部和底部实现的EasyDefRecyclerView**
 
     <com.zly.www.easyrecyclerview.EasyDefRecyclerView
             android:id="@+id/erv"
@@ -71,7 +66,7 @@ adapter设置数据目前提供了这些方法具体实现可以在BaseAdapter�
 
 adapter中ViewHolder需要继承BaseViewHolder
 
-**2.自定义**
+###**2.自定义**
 
 头部使用秋哥的[android-Ultra-Pull-To-Refresh](https://github.com/liaohuqiu/android-Ultra-Pull-To-Refresh)这里可以参考秋哥的文档.
 
@@ -110,22 +105,18 @@ adapter中ViewHolder需要继承BaseViewHolder
 
 实现后调用setFooterView()方法设置
 
-### **总结**
-----
+## **总结**
 目前还在EasyRecyclerView还在优化欢迎各位提出你们宝贵的意见,例子可以参考Sample
 
-### **感谢**
-----
+## **感谢**
 秋哥的[android-Ultra-Pull-To-Refresh](https://github.com/liaohuqiu/android-Ultra-Pull-To-Refresh)</br>
 [仲锦大师](https://github.com/chenzj-king)的帮助
 
-### **联系方式**
-----
+## **联系方式**
 qq:1835556188</br>
 blog:http://blog.csdn.net/zly921112</br>
 
-### **License**
----
+## **License**
     Copyright (c) 2016 zhuliyuan
 
     Licensed under the Apache License, Version 2.0 (the "License");
