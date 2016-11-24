@@ -2,7 +2,9 @@ package com.zly.www.easyrecyclerview;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -162,11 +164,6 @@ public class EasyRecyclerView extends FrameLayout {
         });
     }
 
-    public void setLayoutManager(RecyclerView.LayoutManager layout) {
-        mRecyclerView.setLayoutManager(layout);
-    }
-
-
     public void setAdapter(BaseAdapter adapter) {
         if (adapter == null) {
             throw new NullPointerException("adapter 不能为空");
@@ -300,13 +297,40 @@ public class EasyRecyclerView extends FrameLayout {
         mPtrFrame.autoRefresh(atOnce, mDurationToCloseHeader);
     }
 
-
     public PtrFrameLayout getPtrFrame() {
         return mPtrFrame;
     }
 
     public RecyclerView getRecyclerView() {
         return mRecyclerView;
+    }
+
+    public void setLayoutManager(final RecyclerView.LayoutManager manager) {
+        if (manager instanceof GridLayoutManager) {
+
+            ((GridLayoutManager) manager).setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
+                @Override
+                public int getSpanSize(int position) {
+                    if(mAdapter == null){
+                        return 1;
+                    }else if(mEnableLoadMore){
+                        if(position == mAdapter.getItemCount() - 1){
+                            return ((GridLayoutManager) manager).getSpanCount();
+                        }else{
+                            return 1;
+                        }
+                    }else{
+                        return 1;
+                    }
+
+                }
+            });
+        } else if (manager instanceof StaggeredGridLayoutManager) {
+
+        }
+
+
+        mRecyclerView.setLayoutManager(manager);
     }
 
     public RecyclerView.LayoutManager getLayoutManager() {
@@ -342,7 +366,7 @@ public class EasyRecyclerView extends FrameLayout {
 
     public void move(int position, boolean isSmooth) {
         if (position < 0 || position >= mAdapter.getItemCount()) {
-            Log.e(TAG,"move positon error");
+            Log.e(TAG, "move positon error");
             return;
         }
         mMovePoi = position;
@@ -366,7 +390,8 @@ public class EasyRecyclerView extends FrameLayout {
             mRecyclerView.scrollBy(0, top);
         } else {
             mReviseMovePoi = true;
-            mRecyclerView.smoothScrollToPosition(position);
+            //Todo scrollToPosition不触发RecyclerView.OnScrollListener监听所以没校正位置 改成smoothScrollToPosition()方法即可 这个问题后期google应该会修复所以这里未改成smoothScrollToPosition()
+            mRecyclerView.scrollToPosition(position);
         }
     }
 
@@ -385,13 +410,13 @@ public class EasyRecyclerView extends FrameLayout {
         }
     }
 
-    class ReviseMoveListener extends RecyclerView.OnScrollListener{
+    class ReviseMoveListener extends RecyclerView.OnScrollListener {
         @Override
         public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-            if(mReviseMovePoi && newState == RecyclerView.SCROLL_STATE_IDLE){
+            if (mReviseMovePoi && newState == RecyclerView.SCROLL_STATE_IDLE) {
                 mReviseMovePoi = false;
                 int n = mMovePoi - LayoutManagerUtil.getFirstVisibleItemPosition(getLayoutManager());
-                if(n >= 0 && n < mRecyclerView.getChildCount()){
+                if (n >= 0 && n < mRecyclerView.getChildCount()) {
                     int top = mRecyclerView.getChildAt(n).getTop();
                     mRecyclerView.scrollBy(0, top);
                 }
