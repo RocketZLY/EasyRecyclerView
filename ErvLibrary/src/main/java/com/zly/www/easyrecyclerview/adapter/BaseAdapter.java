@@ -19,8 +19,8 @@ import java.util.List;
 
 public abstract class BaseAdapter<T, VH extends BaseViewHolder> extends RecyclerView.Adapter<BaseViewHolder> {
 
-    public final int TYPE_FOOTER = 22222;
-    public final int TYPE_NORMAL = 33333;
+    public static final int TYPE_FOOTER = 22222;
+    public static final int TYPE_NORMAL = 33333;
 
     private View mFooter;
     private List<T> mList;

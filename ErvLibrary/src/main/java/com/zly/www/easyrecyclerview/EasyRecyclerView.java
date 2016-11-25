@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -307,29 +306,18 @@ public class EasyRecyclerView extends FrameLayout {
 
     public void setLayoutManager(final RecyclerView.LayoutManager manager) {
         if (manager instanceof GridLayoutManager) {
-
             ((GridLayoutManager) manager).setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
                 @Override
                 public int getSpanSize(int position) {
-                    if(mAdapter == null){
-                        return 1;
-                    }else if(mEnableLoadMore){
-                        if(position == mAdapter.getItemCount() - 1){
+                    switch (mAdapter.getItemViewType(position)){
+                        case BaseAdapter.TYPE_FOOTER:
                             return ((GridLayoutManager) manager).getSpanCount();
-                        }else{
+                        default:
                             return 1;
-                        }
-                    }else{
-                        return 1;
                     }
-
                 }
             });
-        } else if (manager instanceof StaggeredGridLayoutManager) {
-
         }
-
-
         mRecyclerView.setLayoutManager(manager);
     }
 
