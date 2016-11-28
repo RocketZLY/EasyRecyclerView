@@ -20,6 +20,7 @@ import com.zly.www.easyrecyclerview.ptrlib.PtrDefaultHandler;
 import com.zly.www.easyrecyclerview.ptrlib.PtrFrameLayout;
 import com.zly.www.easyrecyclerview.ptrlib.PtrHandler;
 import com.zly.www.easyrecyclerview.ptrlib.PtrUIHandler;
+import com.zly.www.easyrecyclerview.utils.LayoutManagerUtil;
 
 
 /**
@@ -304,12 +305,16 @@ public class EasyRecyclerView extends FrameLayout {
         return mRecyclerView;
     }
 
+    public void setItemDecoration(RecyclerView.ItemDecoration itemDecoration){
+        mRecyclerView.addItemDecoration(itemDecoration);
+    }
+
     public void setLayoutManager(final RecyclerView.LayoutManager manager) {
         if (manager instanceof GridLayoutManager) {
             ((GridLayoutManager) manager).setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
                 @Override
                 public int getSpanSize(int position) {
-                    switch (mAdapter.getItemViewType(position)){
+                    switch (mAdapter.getItemViewType(position)) {
                         case BaseAdapter.TYPE_FOOTER:
                             return ((GridLayoutManager) manager).getSpanCount();
                         default:

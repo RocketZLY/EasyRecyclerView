@@ -1,4 +1,4 @@
-package com.zly.www.easyrecyclerview;
+package com.zly.www.easyrecyclerview.utils;
 
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -7,9 +7,9 @@ import android.support.v7.widget.StaggeredGridLayoutManager;
 
 import java.util.Arrays;
 
-import static com.zly.www.easyrecyclerview.LayoutManagerUtil.LAYOUT_MANAGER_TYPE.GRID;
-import static com.zly.www.easyrecyclerview.LayoutManagerUtil.LAYOUT_MANAGER_TYPE.LINEAR;
-import static com.zly.www.easyrecyclerview.LayoutManagerUtil.LAYOUT_MANAGER_TYPE.STAGGERED_GRID;
+import static com.zly.www.easyrecyclerview.utils.LayoutManagerUtil.LAYOUT_MANAGER_TYPE.GRID;
+import static com.zly.www.easyrecyclerview.utils.LayoutManagerUtil.LAYOUT_MANAGER_TYPE.LINEAR;
+import static com.zly.www.easyrecyclerview.utils.LayoutManagerUtil.LAYOUT_MANAGER_TYPE.STAGGERED_GRID;
 
 /**
  * @author chenzj

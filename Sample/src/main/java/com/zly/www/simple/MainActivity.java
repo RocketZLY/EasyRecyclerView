@@ -1,64 +1,69 @@
 package com.zly.www.simple;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.view.View;
 
-import com.zly.www.easyrecyclerview.EasyDefRecyclerView;
-import com.zly.www.easyrecyclerview.listener.OnLoadListener;
-import com.zly.www.easyrecyclerview.listener.OnRefreshListener;
+import com.zly.www.easyrecyclerview.EasyRecyclerView;
+import com.zly.www.easyrecyclerview.listener.ItemClickSupport;
+import com.zly.www.simple.adapter.RvAdapter;
+import com.zly.www.simple.customall.CustomAllActivity;
+import com.zly.www.simple.itemstick.ItemStickActivity;
 
+import java.util.ArrayList;
+import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements OnRefreshListener, OnLoadListener {
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
-    private EasyDefRecyclerView erv;
-    private RvAdapter rvAdapter;
-    private Handler handler = new Handler();
+/**
+ * Created by zly on 2016/11/28 0028.
+ */
+
+public class MainActivity extends AppCompatActivity {
+
+    @BindView(R.id.erv)
+    EasyRecyclerView erv;
+
+    private RvAdapter mAdapter;
+    private List<String> mList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        ButterKnife.bind(this);
 
-        erv = (EasyDefRecyclerView) findViewById(R.id.erv);
-        erv.setAdapter(rvAdapter = new RvAdapter());
-        erv.setOnRefreshListener(this);
-        erv.setOnLoadListener(this);
-
+        initData();
+        initView();
     }
 
-    @Override
-    public void onRefreshListener() {
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                for (int i = 10; i > 0; i--) {
-                    rvAdapter.addData(0,"最新数据+" + i);
-                    erv.getRecyclerView().scrollToPosition(0);
-                }
-            }
-        }, 3000);
+
+    private void initData() {
+        mList.add("定制头部和底部");
+        mList.add("顶部吸附");
     }
 
-    private boolean isFail = false;
+    private void initView() {
+        erv.setLayoutManager(new GridLayoutManager(this,3));
+        erv.setAdapter(mAdapter = new RvAdapter());
+        mAdapter.setDatas(mList);
 
-    @Override
-    public void onLoadListener() {
-        handler.postDelayed(new Runnable() {
+        ItemClickSupport.addTo(erv.getRecyclerView()).setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
             @Override
-            public void run() {
-
-                if (rvAdapter.getItemCount() > 20 && !isFail) {
-                    isFail = true;
-                    erv.loadFail();
-                } else if (rvAdapter.getItemCount() > 30) {
-                    erv.noMore();
-                } else {
-                    for (int i = 0; i < 10; i++) {
-                        rvAdapter.addData("更多数据+" + i);
-                    }
+            public void onItemClicked(RecyclerView recyclerView, int position, View v) {
+                switch (position){
+                    case 0:
+                        startActivity(new Intent(MainActivity.this,CustomAllActivity.class));
+                        break;
+                    case 1:
+                        startActivity(new Intent(MainActivity.this,ItemStickActivity.class));
+                        break;
                 }
             }
-        }, 3000);
+        });
     }
 }
