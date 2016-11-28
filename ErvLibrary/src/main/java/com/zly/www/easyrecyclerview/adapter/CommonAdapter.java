@@ -14,13 +14,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * 通用adapter
  * Created by zly on 2016/10/27 0027.
  */
 
-public abstract class BaseAdapter<T, VH extends BaseViewHolder> extends RecyclerView.Adapter<BaseViewHolder> {
+public abstract class CommonAdapter<T, VH extends BaseViewHolder> extends RecyclerView.Adapter<BaseViewHolder> {
 
-    public static final int TYPE_FOOTER = 22222;
-    public static final int TYPE_NORMAL = 33333;
+    public static final int TYPE_FOOTER = 233333;
 
     private View mFooter;
     private List<T> mList;
@@ -29,6 +29,15 @@ public abstract class BaseAdapter<T, VH extends BaseViewHolder> extends Recycler
     @Override
     public int getItemCount() {
         return mList == null || mList.size() == 0 ? 0 : mFooter == null ? mList.size() : mList.size() + 1;
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        if(getFooter() != null && getItemCount() - 1 == position){
+            return TYPE_FOOTER;
+        }else{
+            return super.getItemViewType(position);
+        }
     }
 
     @Override

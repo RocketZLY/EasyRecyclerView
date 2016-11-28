@@ -4,7 +4,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.zly.www.easyrecyclerview.adapter.NormalAdapter;
+import com.zly.www.easyrecyclerview.adapter.CommonAdapter;
 import com.zly.www.easyrecyclerview.adapter.viewholder.BaseViewHolder;
 import com.zly.www.simple.R;
 
@@ -15,7 +15,7 @@ import butterknife.ButterKnife;
  * Created by zly on 2016/10/13 0013.
  */
 
-public class RvAdapter extends NormalAdapter<String, RvAdapter.ViewHolder> {
+public class RvAdapter extends CommonAdapter<String, RvAdapter.ViewHolder> {
 
 
     @Override

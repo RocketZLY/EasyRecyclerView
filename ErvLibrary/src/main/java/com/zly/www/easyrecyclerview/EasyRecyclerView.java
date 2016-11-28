@@ -11,7 +11,7 @@ import android.view.View;
 import android.view.ViewStub;
 import android.widget.FrameLayout;
 
-import com.zly.www.easyrecyclerview.adapter.BaseAdapter;
+import com.zly.www.easyrecyclerview.adapter.CommonAdapter;
 import com.zly.www.easyrecyclerview.footer.ErvLoadUIHandle;
 import com.zly.www.easyrecyclerview.listener.OnLoadListener;
 import com.zly.www.easyrecyclerview.listener.OnRefreshListener;
@@ -52,7 +52,7 @@ public class EasyRecyclerView extends FrameLayout {
     private OnRefreshListener mRefreshListener;
     private OnLoadListener mOnLoadListener;
     private View mFooterView;
-    private BaseAdapter mAdapter;
+    private CommonAdapter mAdapter;
     private ErvLoadUIHandle mLoadUIHandler;
     private View mEmptyView;
     private ViewStub mStubEmpty;
@@ -164,7 +164,7 @@ public class EasyRecyclerView extends FrameLayout {
         });
     }
 
-    public void setAdapter(BaseAdapter adapter) {
+    public void setAdapter(CommonAdapter adapter) {
         if (adapter == null) {
             throw new NullPointerException("adapter 不能为空");
         }
@@ -315,7 +315,7 @@ public class EasyRecyclerView extends FrameLayout {
                 @Override
                 public int getSpanSize(int position) {
                     switch (mAdapter.getItemViewType(position)) {
-                        case BaseAdapter.TYPE_FOOTER:
+                        case CommonAdapter.TYPE_FOOTER:
                             return ((GridLayoutManager) manager).getSpanCount();
                         default:
                             return 1;

@@ -7,7 +7,7 @@ import com.zly.www.easyrecyclerview.adapter.viewholder.BaseViewHolder;
  * Created by zly on 2016/10/31 0031.
  */
 
-public abstract class MultipleAdapter<T,VH extends BaseViewHolder> extends BaseAdapter<T,VH> {
+public abstract class MultipleAdapter<T,VH extends BaseViewHolder> extends CommonAdapter<T,VH> {
 
     @Override
     public int getItemViewType(int position) {

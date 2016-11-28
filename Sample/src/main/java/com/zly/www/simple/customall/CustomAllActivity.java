@@ -13,7 +13,10 @@ import com.zly.www.simple.adapter.RvAdapter;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-
+/**
+ * 自定义头部和底部
+ * Created by zly on 2016/11/28 0028.
+ */
 public class CustomAllActivity extends AppCompatActivity implements OnRefreshListener, OnLoadListener {
 
     @BindView(R.id.erv)
