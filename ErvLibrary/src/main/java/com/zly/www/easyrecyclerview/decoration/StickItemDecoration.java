@@ -54,6 +54,18 @@ public abstract class StickItemDecoration<T> extends RecyclerView.ItemDecoration
         int top = parent.getPaddingTop();
         int right = parent.getWidth() - parent.getPaddingRight();
 
+        /**
+         * 增加顶部动画效果
+         */
+        View childView = parent.findViewHolderForLayoutPosition(position).itemView;
+        if (position + 1 < mList.size()) {
+            if (!getTag(position).equals(getTag(position + 1))) {
+                if (childView.getHeight() + childView.getTop() < getStickHeight()) {
+                    c.translate(0, childView.getHeight() + childView.getTop() - getStickHeight());
+                }
+            }
+        }
+
         drawStickDecoration(left, top, right, top + getStickHeight(), parent.getPaddingTop(), getTag(position), c);
     }
 
