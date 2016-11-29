@@ -17,7 +17,6 @@ import butterknife.ButterKnife;
 
 public class RvAdapter extends CommonAdapter<String, RvAdapter.ViewHolder> {
 
-
     @Override
     public ViewHolder createCustomViewHolder(ViewGroup parent, int viewType) {
         return new ViewHolder(inflateView(R.layout.item, parent));

@@ -43,7 +43,7 @@ public class CustomAllActivity extends AppCompatActivity implements OnRefreshLis
             @Override
             public void run() {
                 for (int i = 0; i < 10; i++) {
-                    rvAdapter.addData("最新数据+" + i);
+                    rvAdapter.insert("最新数据+" + i,0);
                 }
             }
         }, 3000);
@@ -62,7 +62,7 @@ public class CustomAllActivity extends AppCompatActivity implements OnRefreshLis
                     erv.noMore();
                 } else {
                     for (int i = 0; i < 10; i++) {
-                        rvAdapter.addData("更多数据+" + i);
+                        rvAdapter.add("更多数据+" + i);
                     }
                 }
             }

@@ -37,20 +37,13 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
-        initData();
         initView();
-    }
-
-
-    private void initData() {
-        mList.add("定制头部和底部");
-        mList.add("顶部吸附");
+        initData();
     }
 
     private void initView() {
         erv.setLayoutManager(new GridLayoutManager(this,3));
         erv.setAdapter(mAdapter = new RvAdapter());
-        mAdapter.setDatas(mList);
 
         ItemClickSupport.addTo(erv.getRecyclerView()).setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
             @Override
@@ -66,4 +59,11 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
+    private void initData() {
+        mAdapter.add("定制头部和底部");
+        mAdapter.add("顶部吸附");
+    }
+
+
 }

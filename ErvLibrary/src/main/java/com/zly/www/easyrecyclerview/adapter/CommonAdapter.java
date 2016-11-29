@@ -2,7 +2,9 @@ package com.zly.www.easyrecyclerview.adapter;
 
 import android.content.Context;
 import android.support.annotation.LayoutRes;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +13,9 @@ import com.zly.www.easyrecyclerview.adapter.viewholder.BaseViewHolder;
 import com.zly.www.easyrecyclerview.adapter.viewholder.FooterViewHolder;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -21,21 +26,22 @@ import java.util.List;
 public abstract class CommonAdapter<T, VH extends BaseViewHolder> extends RecyclerView.Adapter<BaseViewHolder> {
 
     public static final int TYPE_FOOTER = 233333;
-
+    private final String TAG = "CommonAdapter";
     private View mFooter;
-    private List<T> mList;
     private Context mContext;
+    private List<T> mDatas = new ArrayList<>();
+    private final Object mLock = new Object();
 
     @Override
     public int getItemCount() {
-        return mList == null || mList.size() == 0 ? 0 : mFooter == null ? mList.size() : mList.size() + 1;
+        return mDatas == null || mDatas.size() == 0 ? 0 : mFooter == null ? mDatas.size() : mDatas.size() + 1;
     }
 
     @Override
     public int getItemViewType(int position) {
-        if(getFooter() != null && getItemCount() - 1 == position){
+        if (getFooter() != null && getItemCount() - 1 == position) {
             return TYPE_FOOTER;
-        }else{
+        } else {
             return super.getItemViewType(position);
         }
     }
@@ -54,7 +60,7 @@ public abstract class CommonAdapter<T, VH extends BaseViewHolder> extends Recycl
     @Override
     public void onBindViewHolder(BaseViewHolder holder, int position) {
         if (getItemViewType(position) != TYPE_FOOTER)
-            bindCustomViewHolder((VH) holder, mList.get(position), position);
+            bindCustomViewHolder((VH) holder, mDatas.get(position), position);
     }
 
     public View inflateView(@LayoutRes int resId, ViewGroup parent) {
@@ -77,64 +83,139 @@ public abstract class CommonAdapter<T, VH extends BaseViewHolder> extends Recycl
         mFooter = null;
     }
 
-    public List<T> getDatas() {
-        return mList;
+    public void add(@NonNull T object) {
+        synchronized (mLock) {
+            if (null != mDatas) {
+                mDatas.add(object);
+                notifyItemInserted(mDatas.size() - 1);
+            }
+        }
     }
 
-    public void setDatas(List<T> list) {
-        mList = list;
+    public void addAll(@NonNull Collection<? extends T> collection) {
+        synchronized (mLock) {
+            if (null != mDatas) {
+                mDatas.addAll(collection);
+
+                if (mDatas.size() - collection.size() != 0) {
+                    notifyItemRangeInserted(mDatas.size() - collection.size(), collection.size());
+                } else {
+                    notifyDataSetChanged();
+                }
+            }
+        }
+
+    }
+
+    @SafeVarargs
+    public final void addAll(@NonNull T... items) {
+        synchronized (mLock) {
+            if (null != mDatas) {
+                Collections.addAll(mDatas, items);
+                if (mDatas.size() - items.length != 0) {
+                    notifyItemRangeInserted(mDatas.size() - items.length, items.length);
+                } else {
+                    notifyDataSetChanged();
+                }
+            }
+        }
+    }
+
+    public void insert(@NonNull T object, int index) {
+        if (mDatas == null || index < 0 || index > mDatas.size()) {
+            Log.i(TAG, "insert: index error");
+            return;
+        }
+        synchronized (mLock) {
+            if (null != mDatas) {
+                mDatas.add(index, object);
+                notifyItemInserted(index);
+            }
+        }
+    }
+
+    public void insertAll(@NonNull Collection<? extends T> collection, int index) {
+        if (mDatas == null || index < 0 || index > mDatas.size()) {
+            Log.i(TAG, "insertAll: index error");
+            return;
+        }
+        synchronized (mLock) {
+            if (null != mDatas) {
+                mDatas.addAll(index, collection);
+                notifyItemRangeInserted(index, collection.size());
+            }
+        }
+    }
+
+    public void remove(int index) {
+        if (mDatas == null || index < 0 || index > mDatas.size() - 1) {
+            Log.i(TAG, "remove: index error");
+            return;
+        }
+        synchronized (mLock) {
+            mDatas.remove(index);
+            notifyItemRemoved(index);
+        }
+    }
+
+    public boolean remove(@NonNull T object) {
+        int removeIndex = -1;
+        boolean removeSuccess = false;
+
+        if (mDatas == null || mDatas.size() == 0) {
+            Log.i(TAG, "remove fail datas emply");
+            return false;
+        }
+
+        synchronized (mLock) {
+            removeIndex = mDatas.indexOf(object);
+            removeSuccess = mDatas.remove(object);
+        }
+
+        if (removeSuccess) {
+            notifyItemRemoved(removeIndex);
+            return true;
+        }
+        return false;
+    }
+
+    public void clear() {
+        synchronized (mLock) {
+            if (mDatas != null) {
+                mDatas.clear();
+            }
+        }
         notifyDataSetChanged();
     }
 
-    public void addData(T t) {
-        addData(getItemCount() - 1, t);
-    }
-
-    public void addData(int position, T t) {
-        if (mList == null)
-            mList = new ArrayList<>();
-
-        mList.add(position, t);
-        notifyItemInserted(position);
-    }
-
-    public void addDatas(List<T> list) {
-        addDatas(getItemCount() - 1, list);
-    }
-
-    public void addDatas(int position, List<T> list) {
-        if (mList == null)
-            mList = new ArrayList<>();
-
-        mList.addAll(position, list);
-        notifyItemRangeInserted(position, list.size());
-    }
-
-    public void removeData(int position) {
-        if (mList != null) {
-            mList.remove(position);
-            notifyItemRemoved(position);
+    public void sort(Comparator<? super T> comparator) {
+        synchronized (mLock) {
+            if (mDatas != null) {
+                Collections.sort(mDatas, comparator);
+            }
         }
+        notifyDataSetChanged();
     }
 
-    public void removeData(T t) {
-        removeData(mList.indexOf(t));
-    }
-
-    public void removeData(List<T> t) {
-        if (mList != null) {
-            mList.removeAll(t);
-            notifyDataSetChanged();
+    public void update(@NonNull List<T> mDatas) {
+        synchronized (mLock) {
+            this.mDatas = mDatas;
         }
+        notifyDataSetChanged();
     }
 
+    public T getItem(int position) {
+        return mDatas.get(position);
+    }
 
-    public void clearDatas() {
-        if (mList != null) {
-            mList.clear();
-            mList = null;
-            notifyDataSetChanged();
-        }
+    public int getPosition(T item) {
+        return mDatas.indexOf(item);
+    }
+
+    public List<T> getData() {
+        if (null == mDatas)
+            mDatas = new ArrayList<>();
+        return mDatas;
     }
 
     public abstract VH createCustomViewHolder(ViewGroup parent, int viewType);
