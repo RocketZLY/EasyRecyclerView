@@ -27,10 +27,12 @@ public abstract class CommonAdapter<T, VH extends BaseViewHolder> extends Recycl
 
     public static final int TYPE_FOOTER = 233333;
     private final String TAG = "CommonAdapter";
-    private View mFooter;
-    private Context mContext;
-    private List<T> mDatas = new ArrayList<>();
     private final Object mLock = new Object();
+    private Context mContext;
+
+    private View mFooter;
+    private RecyclerView mRecyclerView;
+    private List<T> mDatas = new ArrayList<>();
 
     @Override
     public int getItemCount() {
@@ -50,6 +52,8 @@ public abstract class CommonAdapter<T, VH extends BaseViewHolder> extends Recycl
     public BaseViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         if (mContext == null)
             mContext = parent.getContext();
+        if (mRecyclerView == null)
+            mRecyclerView = (RecyclerView) parent;
 
         if (viewType == TYPE_FOOTER) {
             return new FooterViewHolder(mFooter);
@@ -130,6 +134,9 @@ public abstract class CommonAdapter<T, VH extends BaseViewHolder> extends Recycl
             if (null != mDatas) {
                 mDatas.add(index, object);
                 notifyItemInserted(index);
+
+                if (index == 0)
+                    scrollTop();
             }
         }
     }
@@ -143,6 +150,9 @@ public abstract class CommonAdapter<T, VH extends BaseViewHolder> extends Recycl
             if (null != mDatas) {
                 mDatas.addAll(index, collection);
                 notifyItemRangeInserted(index, collection.size());
+
+                if (index == 0)
+                    scrollTop();
             }
         }
     }
@@ -216,6 +226,14 @@ public abstract class CommonAdapter<T, VH extends BaseViewHolder> extends Recycl
         if (null == mDatas)
             mDatas = new ArrayList<>();
         return mDatas;
+    }
+
+    /**
+     * 处理insert index为0时新数据未显示问题
+     */
+    private void scrollTop() {
+        if (null != mRecyclerView)
+            mRecyclerView.scrollToPosition(0);
     }
 
     public abstract VH createCustomViewHolder(ViewGroup parent, int viewType);
