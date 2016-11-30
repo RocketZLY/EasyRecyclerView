@@ -1,11 +1,15 @@
 package com.zly.www.easyrecyclerview.decoration;
 
+import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+
+import com.zly.www.easyrecyclerview.utils.DisplayUtil;
 
 import java.util.List;
 
@@ -14,15 +18,35 @@ import java.util.List;
  * Created by zly on 2016/11/28 0028.
  */
 
-public abstract class StickItemDecoration<T> extends RecyclerView.ItemDecoration {
+public abstract class StickItemDecoration extends RecyclerView.ItemDecoration {
 
+    private Context mContext;
     private Paint mPaint;
-    private List<T> mList;
+    private List mList;
 
-    public StickItemDecoration(List<T> mList) {
+    private int mStickHeight;
+    private int mStickBackgroundColor;
+    private int mStickTextColor;
+    private int mStickTextSize;
+    private int mStickTextoffset;
+
+    public StickItemDecoration(Context context, List mList) {
         this.mList = mList;
+        this.mContext = context;
         this.mPaint = new Paint();
-        mPaint.setTextSize(getStickTextSize());
+
+        initProperty();
+    }
+
+    private void initProperty() {
+        mStickHeight = DisplayUtil.dip2px(mContext, 30);
+        mStickTextSize = DisplayUtil.sp2px(mContext, 16);
+        mStickTextoffset = DisplayUtil.dip2px(mContext, 2);
+
+        mStickTextColor = Color.WHITE;
+        mStickBackgroundColor = Color.GRAY;
+
+        mPaint.setTextSize(mStickTextSize);
         mPaint.setTextAlign(Paint.Align.LEFT);
     }
 
@@ -37,10 +61,10 @@ public abstract class StickItemDecoration<T> extends RecyclerView.ItemDecoration
             View view = parent.getChildAt(i);
             int position = parent.getChildAdapterPosition(view);
             if (position == 0) {
-                drawStickDecoration(left, view.getTop() - getStickHeight(), right, view.getTop(), parent.getPaddingTop(), getTag(position), c);
+                drawStickDecoration(left, view.getTop() - mStickHeight, right, view.getTop(), parent.getPaddingTop(), getTag(position), c);
             } else {
                 if (position < mList.size() && !getTag(position).equals(getTag(position - 1))) {
-                    drawStickDecoration(left, view.getTop() - getStickHeight(), right, view.getTop(), parent.getPaddingTop(), getTag(position), c);
+                    drawStickDecoration(left, view.getTop() - mStickHeight, right, view.getTop(), parent.getPaddingTop(), getTag(position), c);
                 }
             }
         }
@@ -60,23 +84,23 @@ public abstract class StickItemDecoration<T> extends RecyclerView.ItemDecoration
         View childView = parent.findViewHolderForLayoutPosition(position).itemView;
         if (position + 1 < mList.size()) {
             if (!getTag(position).equals(getTag(position + 1))) {
-                if (childView.getHeight() + childView.getTop() < getStickHeight()) {
-                    c.translate(0, childView.getHeight() + childView.getTop() - getStickHeight());
+                if (childView.getHeight() + childView.getTop() < mStickHeight) {
+                    c.translate(0, childView.getHeight() + childView.getTop() - mStickHeight);
                 }
             }
         }
 
-        drawStickDecoration(left, top, right, top + getStickHeight(), parent.getPaddingTop(), getTag(position), c);
+        drawStickDecoration(left, top, right, top + mStickHeight, parent.getPaddingTop(), getTag(position), c);
     }
 
     @Override
     public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
         int position = parent.getChildAdapterPosition(view);
         if (position == 0) {
-            outRect.set(0, getStickHeight(), 0, 0);
+            outRect.set(0, mStickHeight, 0, 0);
         } else {
             if (position < mList.size() && !getTag(position).equals(getTag(position - 1))) {
-                outRect.set(0, getStickHeight(), 0, 0);
+                outRect.set(0, mStickHeight, 0, 0);
             } else {
                 outRect.set(0, 0, 0, 0);
             }
@@ -89,28 +113,58 @@ public abstract class StickItemDecoration<T> extends RecyclerView.ItemDecoration
     private void drawStickDecoration(int left, int top, int right, int bottom, int parentTopPadding, String text, Canvas c) {
         if (top >= parentTopPadding) {
             Rect rect = new Rect(left, top, right, bottom);
-            mPaint.setColor(getStickBackgroundColor());
+            mPaint.setColor(mStickBackgroundColor);
             c.drawRect(rect, mPaint);
 
-            mPaint.setColor(getStickTextColor());
+            mPaint.setColor(mStickTextColor);
             Paint.FontMetrics fontMetrics = mPaint.getFontMetrics();
             float textTop = fontMetrics.top;
             float textBottom = fontMetrics.bottom;
             int textY = (int) (rect.centerY() - textTop / 2 - textBottom / 2);
-            c.drawText(text, left + getStickTextoffset(), textY, mPaint);
+            c.drawText(text, left + mStickTextoffset, textY, mPaint);
         }
     }
 
-
     public abstract String getTag(int position);
 
-    public abstract int getStickHeight();
 
-    public abstract int getStickTextSize();
+    public int getmStickHeight() {
+        return mStickHeight;
+    }
 
-    public abstract int getStickBackgroundColor();
+    public void setmStickHeight(int mStickHeight) {
+        this.mStickHeight = mStickHeight;
+    }
 
-    public abstract int getStickTextColor();
+    public int getmStickBackgroundColor() {
+        return mStickBackgroundColor;
+    }
 
-    public abstract int getStickTextoffset();
+    public void setmStickBackgroundColor(int mStickBackgroundColor) {
+        this.mStickBackgroundColor = mStickBackgroundColor;
+    }
+
+    public int getmStickTextColor() {
+        return mStickTextColor;
+    }
+
+    public void setmStickTextColor(int mStickTextColor) {
+        this.mStickTextColor = mStickTextColor;
+    }
+
+    public int getmStickTextSize() {
+        return mStickTextSize;
+    }
+
+    public void setmStickTextSize(int mStickTextSize) {
+        this.mStickTextSize = mStickTextSize;
+    }
+
+    public int getmStickTextoffset() {
+        return mStickTextoffset;
+    }
+
+    public void setmStickTextoffset(int mStickTextoffset) {
+        this.mStickTextoffset = mStickTextoffset;
+    }
 }

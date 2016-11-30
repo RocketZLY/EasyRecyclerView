@@ -305,7 +305,7 @@ public class EasyRecyclerView extends FrameLayout {
         return mRecyclerView;
     }
 
-    public void setItemDecoration(RecyclerView.ItemDecoration itemDecoration){
+    public void addItemDecoration(RecyclerView.ItemDecoration itemDecoration) {
         mRecyclerView.addItemDecoration(itemDecoration);
     }
 

@@ -8,7 +8,6 @@ import com.zly.www.easyrecyclerview.EasyDefRecyclerView;
 import com.zly.www.easyrecyclerview.listener.OnLoadListener;
 import com.zly.www.easyrecyclerview.listener.OnRefreshListener;
 import com.zly.www.simple.R;
-import com.zly.www.simple.adapter.RvAdapter;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

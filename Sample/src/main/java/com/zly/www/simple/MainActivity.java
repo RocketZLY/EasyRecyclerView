@@ -9,12 +9,9 @@ import android.view.View;
 
 import com.zly.www.easyrecyclerview.EasyRecyclerView;
 import com.zly.www.easyrecyclerview.listener.ItemClickSupport;
-import com.zly.www.simple.adapter.RvAdapter;
 import com.zly.www.simple.customall.CustomAllActivity;
+import com.zly.www.simple.customall.RvAdapter;
 import com.zly.www.simple.itemstick.ItemStickActivity;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -29,7 +26,6 @@ public class MainActivity extends AppCompatActivity {
     EasyRecyclerView erv;
 
     private RvAdapter mAdapter;
-    private List<String> mList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

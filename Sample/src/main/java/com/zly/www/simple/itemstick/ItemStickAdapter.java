@@ -1,4 +1,4 @@
-package com.zly.www.simple.adapter;
+package com.zly.www.simple.itemstick;
 
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,29 +12,30 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
- * Created by zly on 2016/10/13 0013.
+ * Created by zly on 2016/11/30 0030.
  */
 
-public class RvAdapter extends CommonAdapter<String, RvAdapter.ViewHolder> {
+public class ItemStickAdapter extends CommonAdapter<CityBean,ItemStickAdapter.ViewHolder> {
+
 
     @Override
     public ViewHolder createCustomViewHolder(ViewGroup parent, int viewType) {
-        return new ViewHolder(inflateView(R.layout.item, parent));
+        return new ViewHolder(inflateView(R.layout.item_stick,parent));
     }
 
     @Override
-    public void bindCustomViewHolder(ViewHolder holder, String s, int position) {
-        holder.tv.setText(s);
+    public void bindCustomViewHolder(ViewHolder holder, CityBean cityBean, int position) {
+        holder.tv.setText(cityBean.name);
     }
 
-    class ViewHolder extends BaseViewHolder {
+    class ViewHolder extends BaseViewHolder{
+
         @BindView(R.id.tv)
         TextView tv;
 
-        ViewHolder(View itemView) {
+        public ViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this,itemView);
         }
     }
-
 }
