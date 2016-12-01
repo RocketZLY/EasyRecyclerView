@@ -1,10 +1,10 @@
-package com.zly.www.simple.itemstick;
+package com.zly.www.simple.customdecoration;
 
-import android.app.Activity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 
-import com.zly.www.easyrecyclerview.EasyDefRecyclerView;
+import com.zly.www.easyrecyclerview.EasyRecyclerView;
 import com.zly.www.easyrecyclerview.decoration.StickItemDecoration;
 import com.zly.www.simple.R;
 
@@ -16,12 +16,12 @@ import butterknife.ButterKnife;
  * Created by zly on 2016/11/28 0028.
  */
 
-public class ItemStickActivity extends Activity {
+public class CustomDecorationActivity extends AppCompatActivity {
 
     @BindView(R.id.erv)
-    EasyDefRecyclerView erv;
+    EasyRecyclerView erv;
 
-    private ItemStickAdapter mAdapter;
+    private CustomDecorationAdapter mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +35,7 @@ public class ItemStickActivity extends Activity {
 
     private void initView() {
         erv.setLayoutManager(new LinearLayoutManager(this));
-        erv.setAdapter(mAdapter = new ItemStickAdapter());
+        erv.setAdapter(mAdapter = new CustomDecorationAdapter());
         erv.addItemDecoration(new StickItemDecoration(this,mAdapter.getData()) {
             @Override
             public String getTag(int position) {

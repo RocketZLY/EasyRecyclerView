@@ -32,6 +32,7 @@ public class CustomAllActivity extends AppCompatActivity implements OnRefreshLis
         ButterKnife.bind(this);
 
         erv.setAdapter(rvAdapter = new RvAdapter());
+        erv.setLastUpdateTimeRelateObject(this);
         erv.setOnRefreshListener(this);
         erv.setOnLoadListener(this);
     }

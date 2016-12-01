@@ -1,4 +1,4 @@
-package com.zly.www.simple.itemstick;
+package com.zly.www.simple.customdecoration;
 
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +15,7 @@ import butterknife.ButterKnife;
  * Created by zly on 2016/11/30 0030.
  */
 
-public class ItemStickAdapter extends CommonAdapter<CityBean,ItemStickAdapter.ViewHolder> {
+public class CustomDecorationAdapter extends CommonAdapter<CityBean,CustomDecorationAdapter.ViewHolder> {
 
 
     @Override
@@ -28,7 +28,7 @@ public class ItemStickAdapter extends CommonAdapter<CityBean,ItemStickAdapter.Vi
         holder.tv.setText(cityBean.name);
     }
 
-    class ViewHolder extends BaseViewHolder{
+    class ViewHolder extends BaseViewHolder {
 
         @BindView(R.id.tv)
         TextView tv;

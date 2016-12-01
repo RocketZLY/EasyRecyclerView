@@ -11,7 +11,7 @@ import com.zly.www.easyrecyclerview.EasyRecyclerView;
 import com.zly.www.easyrecyclerview.listener.ItemClickSupport;
 import com.zly.www.simple.customall.CustomAllActivity;
 import com.zly.www.simple.customall.RvAdapter;
-import com.zly.www.simple.itemstick.ItemStickActivity;
+import com.zly.www.simple.customdecoration.CustomDecorationActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
                         startActivity(new Intent(MainActivity.this,CustomAllActivity.class));
                         break;
                     case 1:
-                        startActivity(new Intent(MainActivity.this,ItemStickActivity.class));
+                        startActivity(new Intent(MainActivity.this,CustomDecorationActivity.class));
                         break;
                 }
             }
@@ -57,8 +57,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initData() {
-        mAdapter.add("定制头部和底部");
-        mAdapter.add("顶部吸附");
+        mAdapter.add(getString(R.string.custom_header_footer));
+        mAdapter.add(getString(R.string.custom_item_decoration));
     }
 
 

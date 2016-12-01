@@ -1,4 +1,4 @@
-package com.zly.www.simple.itemstick;
+package com.zly.www.simple.customdecoration;
 
 /**
  * Created by zly on 2016/11/28 0028.

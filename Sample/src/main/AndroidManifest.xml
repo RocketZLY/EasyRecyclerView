@@ -15,7 +15,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".customall.CustomAllActivity" />
-        <activity android:name=".itemstick.ItemStickActivity" />
+        <activity android:name=".customdecoration.CustomDecorationActivity" />
     </application>
 
 </manifest>
