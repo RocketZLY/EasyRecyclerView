@@ -60,11 +60,13 @@ public abstract class StickItemDecoration extends RecyclerView.ItemDecoration {
         for (int i = 0; i < childCount; i++) {
             View view = parent.getChildAt(i);
             int position = parent.getChildAdapterPosition(view);
-            if (position == 0) {
-                drawStickDecoration(left, view.getTop() - mStickHeight, right, view.getTop(), parent.getPaddingTop(), getTag(position), c);
-            } else {
-                if (position < mList.size() && !getTag(position).equals(getTag(position - 1))) {
+            if (position != RecyclerView.NO_POSITION) {
+                if (position == 0) {
                     drawStickDecoration(left, view.getTop() - mStickHeight, right, view.getTop(), parent.getPaddingTop(), getTag(position), c);
+                } else {
+                    if (position < mList.size() && !getTag(position).equals(getTag(position - 1))) {
+                        drawStickDecoration(left, view.getTop() - mStickHeight, right, view.getTop(), parent.getPaddingTop(), getTag(position), c);
+                    }
                 }
             }
         }
@@ -96,13 +98,15 @@ public abstract class StickItemDecoration extends RecyclerView.ItemDecoration {
     @Override
     public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
         int position = parent.getChildAdapterPosition(view);
-        if (position == 0) {
-            outRect.set(0, mStickHeight, 0, 0);
-        } else {
-            if (position < mList.size() && !getTag(position).equals(getTag(position - 1))) {
+        if (position != RecyclerView.NO_POSITION) {
+            if (position == 0) {
                 outRect.set(0, mStickHeight, 0, 0);
             } else {
-                outRect.set(0, 0, 0, 0);
+                if (position < mList.size() && !getTag(position).equals(getTag(position - 1))) {
+                    outRect.set(0, mStickHeight, 0, 0);
+                } else {
+                    outRect.set(0, 0, 0, 0);
+                }
             }
         }
     }
