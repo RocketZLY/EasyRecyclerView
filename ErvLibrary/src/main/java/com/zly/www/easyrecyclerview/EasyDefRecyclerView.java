@@ -6,6 +6,7 @@ import android.util.AttributeSet;
 import android.view.View;
 
 import com.zly.www.easyrecyclerview.footer.ErvDefaultFooter;
+import com.zly.www.easyrecyclerview.ptrlib.PtrClassicDefaultHeader;
 
 /**
  * 默认底部空布局实现
@@ -14,6 +15,8 @@ import com.zly.www.easyrecyclerview.footer.ErvDefaultFooter;
 
 public class EasyDefRecyclerView extends EasyRecyclerView {
 
+
+    private PtrClassicDefaultHeader mPtrClassicHeader;
 
     public EasyDefRecyclerView(Context context) {
         this(context, null);
@@ -29,14 +32,27 @@ public class EasyDefRecyclerView extends EasyRecyclerView {
     }
 
     private void init(Context context) {
-        setLayoutManager(new LinearLayoutManager(getContext()));
+        setHeaderView(mPtrClassicHeader = new PtrClassicDefaultHeader(context));
         setFooterView(new ErvDefaultFooter(context));
+        setLayoutManager(new LinearLayoutManager(getContext()));
         setOnEmptyViewClick(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 autoRefresh();
             }
         });
+    }
+
+    public void setLastUpdateTimeKey(String key) {
+        if (mPtrClassicHeader != null) {
+            mPtrClassicHeader.setLastUpdateTimeKey(key);
+        }
+    }
+
+    public void setLastUpdateTimeRelateObject(Object object) {
+        if (mPtrClassicHeader != null) {
+            mPtrClassicHeader.setLastUpdateTimeRelateObject(object);
+        }
     }
 
 }

@@ -15,7 +15,6 @@ import com.zly.www.easyrecyclerview.adapter.CommonAdapter;
 import com.zly.www.easyrecyclerview.footer.ErvLoadUIHandle;
 import com.zly.www.easyrecyclerview.listener.OnLoadListener;
 import com.zly.www.easyrecyclerview.listener.OnRefreshListener;
-import com.zly.www.easyrecyclerview.ptrlib.PtrClassicFrameLayout;
 import com.zly.www.easyrecyclerview.ptrlib.PtrDefaultHandler;
 import com.zly.www.easyrecyclerview.ptrlib.PtrFrameLayout;
 import com.zly.www.easyrecyclerview.ptrlib.PtrHandler;
@@ -33,7 +32,6 @@ public class EasyRecyclerView extends FrameLayout {
     private final String TAG = getClass().getSimpleName();
     //Erv属性
     private int mNumLoadMore;//最后可见条目 + mNumLoadMore > total 触发加载更多
-    private boolean mEnableLoadMore;//是否允许加载更多
 
     //Ptr属性
     private float mResistance;
@@ -47,7 +45,7 @@ public class EasyRecyclerView extends FrameLayout {
     private boolean mReviseMovePoi = false;//是否需要修正滑动位置
     private int mMovePoi = 0;
 
-    private PtrClassicFrameLayout mPtrFrame;
+    private PtrFrameLayout mPtrFrame;
     private RecyclerView mRecyclerView;
     private OnRefreshListener mRefreshListener;
     private OnLoadListener mOnLoadListener;
@@ -78,7 +76,6 @@ public class EasyRecyclerView extends FrameLayout {
 
         //初始化Erv
         mNumLoadMore = ErvAttr.getInteger(R.styleable.EasyRecyclerView_number_load_more, 4);
-        mEnableLoadMore = ErvAttr.getBoolean(R.styleable.EasyRecyclerView_enable_load_more, true);
         mEmptyRes = ErvAttr.getResourceId(R.styleable.EasyRecyclerView_emply_layout, 0);
 
         //初始化Ptr
@@ -95,7 +92,7 @@ public class EasyRecyclerView extends FrameLayout {
 
     private void initView(Context context) {
         View view = LayoutInflater.from(context).inflate(R.layout.erv_layout, this);
-        mPtrFrame = (PtrClassicFrameLayout) view.findViewById(R.id.ptr);
+        mPtrFrame = (PtrFrameLayout) view.findViewById(R.id.ptr);
         mRecyclerView = (RecyclerView) view.findViewById(R.id.list);
         mStubEmpty = (ViewStub) view.findViewById(R.id.stubEmpty);
 
@@ -110,7 +107,7 @@ public class EasyRecyclerView extends FrameLayout {
 
 
     /**
-     * 初始化ptr 默认经典布局
+     * 初始化ptr属性
      */
     private void initPtr() {
         mPtrFrame.setResistance(mResistance);
@@ -120,7 +117,7 @@ public class EasyRecyclerView extends FrameLayout {
         mPtrFrame.setKeepHeaderWhenRefresh(mKeepHeaderWhenRefresh);
         mPtrFrame.setPullToRefresh(mPullToRefresh);
 
-        mPtrFrame.setLastUpdateTimeRelateObject(this);
+
         mPtrFrame.setPtrHandler(new PtrHandler() {
             @Override
             public boolean checkCanDoRefresh(PtrFrameLayout frame, View content, View header) {
@@ -143,7 +140,7 @@ public class EasyRecyclerView extends FrameLayout {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
-                if (mRecyclerView.getAdapter() != null && getLayoutManager() != null && mEnableLoadMore) {
+                if (mRecyclerView.getAdapter() != null && getLayoutManager() != null && mLoadUIHandler != null) {
                     int itemCount = mRecyclerView.getAdapter().getItemCount();
                     int lastVisibleItemPosition = LayoutManagerUtil.getLastVisibleItemPosition(getLayoutManager());
                     if (dy > 0 && itemCount != 0 && lastVisibleItemPosition + mNumLoadMore > itemCount - 1 &&
@@ -244,7 +241,7 @@ public class EasyRecyclerView extends FrameLayout {
     }
 
     private void addFooter() {
-        if (mAdapter != null && mFooterView != null && mEnableLoadMore) {
+        if (mAdapter != null && mFooterView != null) {
             mAdapter.setFooter(mFooterView);
         }
     }

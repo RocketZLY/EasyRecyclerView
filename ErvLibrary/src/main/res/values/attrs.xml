@@ -2,7 +2,6 @@
 <resources>
     <declare-styleable name="EasyRecyclerView">
         <attr name="number_load_more" format="integer"/>
-        <attr name="enable_load_more" format="boolean"/>
         <attr name="emply_layout" format="reference"/>
     </declare-styleable>
 
