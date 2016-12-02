@@ -1,4 +1,4 @@
-package com.zly.www.simple.customall;
+package com.zly.www.simple.adapter;
 
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,11 +15,11 @@ import butterknife.ButterKnife;
  * Created by zly on 2016/10/13 0013.
  */
 
-public class RvAdapter extends CommonAdapter<String, RvAdapter.ViewHolder> {
+public class CustomAdapter extends CommonAdapter<String, CustomAdapter.ViewHolder> {
 
     @Override
     public ViewHolder createCustomViewHolder(ViewGroup parent, int viewType) {
-        return new ViewHolder(inflateView(R.layout.item_custom_all, parent));
+        return new ViewHolder(inflateView(R.layout.item_custom, parent));
     }
 
     @Override

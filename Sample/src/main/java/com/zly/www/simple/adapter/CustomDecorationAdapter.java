@@ -1,4 +1,4 @@
-package com.zly.www.simple.customdecoration;
+package com.zly.www.simple.adapter;
 
 import android.view.View;
 import android.view.ViewGroup;
@@ -7,6 +7,7 @@ import android.widget.TextView;
 import com.zly.www.easyrecyclerview.adapter.CommonAdapter;
 import com.zly.www.easyrecyclerview.adapter.viewholder.BaseViewHolder;
 import com.zly.www.simple.R;
+import com.zly.www.simple.customdecoration.CityBean;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

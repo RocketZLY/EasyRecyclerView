@@ -15,6 +15,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".customall.CustomAllActivity" />
+        <activity android:name=".customheader.CustomHeaderActivity"/>
         <activity android:name=".customdecoration.CustomDecorationActivity" />
     </application>
 

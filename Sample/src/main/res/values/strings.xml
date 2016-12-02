@@ -2,6 +2,7 @@
     <string name="app_name">Simple</string>
 
 
-    <string name="custom_header_footer">定制头部和脚部</string>
-    <string name="custom_item_decoration">定制条目装饰</string>
+    <string name="custom_header">定制头部</string>
+    <string name="custom_header_footer">定制全部</string>
+    <string name="custom_item_decoration">定制装饰</string>
 </resources>

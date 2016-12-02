@@ -1,4 +1,4 @@
-package com.zly.www.simple.customall;
+package com.zly.www.simple.customheader;
 
 import android.os.Bundle;
 import android.os.Handler;
@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import com.zly.www.easyrecyclerview.EasyDefRecyclerView;
 import com.zly.www.easyrecyclerview.listener.OnLoadListener;
 import com.zly.www.easyrecyclerview.listener.OnRefreshListener;
+import com.zly.www.easyrecyclerview.ptrlib.header.MaterialHeader;
 import com.zly.www.simple.R;
 import com.zly.www.simple.adapter.CustomAdapter;
 
@@ -14,10 +15,10 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
- * 自定义头部和底部
+ * 自定义头部
  * Created by zly on 2016/11/28 0028.
  */
-public class CustomAllActivity extends AppCompatActivity implements OnRefreshListener, OnLoadListener {
+public class CustomHeaderActivity extends AppCompatActivity implements OnRefreshListener, OnLoadListener {
 
     @BindView(R.id.erv)
     EasyDefRecyclerView erv;
@@ -32,6 +33,8 @@ public class CustomAllActivity extends AppCompatActivity implements OnRefreshLis
         setContentView(R.layout.activity_custom);
         ButterKnife.bind(this);
 
+        erv.setHeaderView(new MaterialHeader(this));
+        erv.setPinContent(true);
         erv.setAdapter(mAdapter = new CustomAdapter());
         erv.setLastUpdateTimeRelateObject(this);
         erv.setOnRefreshListener(this);

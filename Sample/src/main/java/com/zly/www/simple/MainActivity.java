@@ -9,9 +9,10 @@ import android.view.View;
 
 import com.zly.www.easyrecyclerview.EasyRecyclerView;
 import com.zly.www.easyrecyclerview.listener.ItemClickSupport;
+import com.zly.www.simple.adapter.CustomAdapter;
 import com.zly.www.simple.customall.CustomAllActivity;
-import com.zly.www.simple.customall.RvAdapter;
 import com.zly.www.simple.customdecoration.CustomDecorationActivity;
+import com.zly.www.simple.customheader.CustomHeaderActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -25,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.erv)
     EasyRecyclerView erv;
 
-    private RvAdapter mAdapter;
+    private CustomAdapter mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,16 +40,19 @@ public class MainActivity extends AppCompatActivity {
 
     private void initView() {
         erv.setLayoutManager(new GridLayoutManager(this,3));
-        erv.setAdapter(mAdapter = new RvAdapter());
+        erv.setAdapter(mAdapter = new CustomAdapter());
 
         ItemClickSupport.addTo(erv.getRecyclerView()).setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
             @Override
             public void onItemClicked(RecyclerView recyclerView, int position, View v) {
                 switch (position){
                     case 0:
-                        startActivity(new Intent(MainActivity.this,CustomAllActivity.class));
+                        startActivity(new Intent(MainActivity.this,CustomHeaderActivity.class));
                         break;
                     case 1:
+                        startActivity(new Intent(MainActivity.this,CustomAllActivity.class));
+                        break;
+                    case 2:
                         startActivity(new Intent(MainActivity.this,CustomDecorationActivity.class));
                         break;
                 }
@@ -57,6 +61,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initData() {
+        mAdapter.add(getString(R.string.custom_header));
         mAdapter.add(getString(R.string.custom_header_footer));
         mAdapter.add(getString(R.string.custom_item_decoration));
     }
