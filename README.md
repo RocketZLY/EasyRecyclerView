@@ -1,4 +1,5 @@
 # EasyRecyclerView
+## **描述**
 这是一个下拉刷新上拉加载更多框架(ps:后期还会加入一些常用的功能.),头部用的秋哥的[android-Ultra-Pull-To-Refresh](https://github.com/liaohuqiu/android-Ultra-Pull-To-Refresh),底部和没有数据的状态自己实现的.其实刚刚开始我是想找个库直接用的,试了几个排名靠前的,感觉跟自己想要的不太一样,索性自己写了一个,当然这当中也遇到了问题,多亏[仲锦大师](https://github.com/chenzj-king)的帮助在此感谢.
 
 #### 特点:
@@ -9,25 +10,36 @@
 </br>
 
 ## **效果预览**
-#### 定制头部&定制脚步
-- 头部秋哥已经定制了很多样式,这里使用默认的样式PtrClassicDefaultHeader
-- 脚部这边使用的默认实现ErvDefaultFooter
+#### 1.定制头部&定制脚步
+- 头部秋哥已经定制了很多样式就直接使用了
+- 脚部这边使用的已经实现好的ErvDefaultFooter
 
-默认头部
+默认头部与顶部效果
 
-![](http://of1ktyksz.bkt.clouddn.com/all.gif)
+![](http://of1ktyksz.bkt.clouddn.com/erv_custom_all.gif)
 
 material style头部
 
-![](http://of1ktyksz.bkt.clouddn.com/md_header.gif)
-</br>
+![](http://of1ktyksz.bkt.clouddn.com/erv_material_header.gif)
 </br>
 
-#### 头部吸附
-![](http://of1ktyksz.bkt.clouddn.com/decoration.gif)
+#### 2.头部吸附
+![](http://of1ktyksz.bkt.clouddn.com/erv_custom_decoration.gif)
 </br>
-</br>
-## **使用默认头部和底部实现EasyDefRecyclerView**
+
+## **使用方式**
+#### 依赖
+EasyRecyclerView目前只支持library依赖
+
+#### 配置
+目前有两个参数可以配置
+- app:emply_layout</br>
+  没有数据时候布局
+
+- app:number_load_more</br>
+  最后可见条目 + number_load_more > total 触发加载更多;默认值为4
+
+##### xml中配置示例  
     <com.zly.www.easyrecyclerview.EasyDefRecyclerView
             android:id="@+id/erv"
             android:layout_width="match_parent"
@@ -35,16 +47,22 @@ material style头部
             app:emply_layout="@layout/erv_default_empty" />
 
 
-目前有两个个自定义属性
-- app:emply_layout 没有数据时候布局
-- app:number_load_more 最后可见条目 + number_load_more > total 触发加载更多
 
-activity代码
+
+
+##### activity代码配置
 
     erv.setAdapter(rvAdapter = new RvAdapter());//设置adapter
     erv.setLastUpdateTimeRelateObject(this);//传入参数类名作为记录刷新时间key
     erv.setOnRefreshListener(this);//设置刷新监听
     erv.setOnLoadListener(this);//设置加载更多监听
+
+由于这里使用的EasyDefRecyclerView,头部就是默认经典样式所以需要调用,使用其他头部时不需要调用
+
+    erv.setLastUpdateTimeRelateObject(this);//传入参数类名作为记录刷新时间key
+
+
+##### adapter代码配置
 
 adapter需要实现CommonAdapter或者MultipleAdapter抽象方法
 
@@ -58,7 +76,7 @@ MultipleAdapter多条目布局还多一个方法需要实现
     //返回多条目的type
     public abstract int customItemViewType(int position);
 
-目前提供了这些方法操作adapter数据,具体实现可以在CommonAdapter中查看
+目前提供了下面这些方法操作adapter数据,具体实现可以在CommonAdapter中查看
 
 新增数据
 - public void add(@NonNull T object)
@@ -83,19 +101,22 @@ MultipleAdapter多条目布局还多一个方法需要实现
 排序
 - public void sort(Comparator<? super T> comparator)
 
+加载布局
+- public View inflateView(@LayoutRes int resId, ViewGroup parent)
 
 adapter中ViewHolder需要继承BaseViewHolder
 </br>
 
-## **头部吸附效果**
 
-        mItemDecoration = new StickItemDecoration(context,dataList) {
-                    @Override
-                    public String getTag(int position) {
-                        return "吸附头部显示的文字";
-                    }
-          }
-        erv.addItemDecoration(mItemDecoration);
+## **其他配置**
+##### 头部吸附效果
+    mItemDecoration = new StickItemDecoration(context,dataList) {
+                @Override
+                public String getTag(int position) {
+                    return "吸附头部显示的文字";
+                }
+      }
+    erv.addItemDecoration(mItemDecoration);
 
 这里StickItemDecoration提供了如下方法来定制吸附效果
 
@@ -120,7 +141,7 @@ adapter中ViewHolder需要继承BaseViewHolder
 
 一般情况下这些样式应该够了,如果有特殊需求可以自定义头部.然后erv.setHeaderView(view);
 
-底部的话目前我只实现了一个ErvDefaultFooter,自定义的话需要实现ErvLoadUIHandle接口.
+底部的话目前我只实现了一个ErvDefaultFooter,自定义的话需要实现ErvLoadUIHandle接口.写法可以参考ErvDefaultFooter
 
      public interface ErvLoadUIHandle {
 
