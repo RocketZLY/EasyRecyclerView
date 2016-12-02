@@ -90,13 +90,13 @@ adapter中ViewHolder需要继承BaseViewHolder
 
 ## **头部吸附效果**
 
-    mItemDecoration = new StickItemDecoration(context,dataList) {
-                @Override
-                public String getTag(int position) {
-                    return "吸附头部显示的文字";
-                }
-      }
-    erv.addItemDecoration(mItemDecoration);
+        mItemDecoration = new StickItemDecoration(context,dataList) {
+                    @Override
+                    public String getTag(int position) {
+                        return "吸附头部显示的文字";
+                    }
+          }
+        erv.addItemDecoration(mItemDecoration);
 
 这里StickItemDecoration提供了如下方法来定制吸附效果
 
