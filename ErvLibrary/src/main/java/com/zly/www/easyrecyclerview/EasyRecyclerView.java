@@ -298,6 +298,34 @@ public class EasyRecyclerView extends FrameLayout {
         return mPtrFrame;
     }
 
+    public void setResistance(float resistance) {
+        mPtrFrame.setResistance(resistance);
+    }
+
+    public void setRatioOfHeaderHeightToRefresh(float ratio) {
+        mPtrFrame.setRatioOfHeaderHeightToRefresh(ratio);
+    }
+
+    public void setDurationToClose(int duration) {
+        mPtrFrame.setDurationToClose(duration);
+    }
+
+    public void setDurationToCloseHeader(int duration) {
+        mPtrFrame.setDurationToCloseHeader(duration);
+    }
+
+    public void setKeepHeaderWhenRefresh(boolean keepOrNot) {
+        mPtrFrame.setKeepHeaderWhenRefresh(keepOrNot);
+    }
+
+    public void setPullToRefresh(boolean pullToRefresh) {
+        mPtrFrame.setPullToRefresh(pullToRefresh);
+    }
+
+    public void setPinContent(boolean pinContent) {
+        mPtrFrame.setPinContent(pinContent);
+    }
+
     public RecyclerView getRecyclerView() {
         return mRecyclerView;
     }

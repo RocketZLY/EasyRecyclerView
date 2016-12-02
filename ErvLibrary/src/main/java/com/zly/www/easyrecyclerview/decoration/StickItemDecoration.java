@@ -44,7 +44,7 @@ public abstract class StickItemDecoration extends RecyclerView.ItemDecoration {
         mStickTextoffset = DisplayUtil.dip2px(mContext, 2);
 
         mStickTextColor = Color.WHITE;
-        mStickBackgroundColor = Color.GRAY;
+        mStickBackgroundColor = 0xffA3A3A3;
 
         mPaint.setTextSize(mStickTextSize);
         mPaint.setTextAlign(Paint.Align.LEFT);
