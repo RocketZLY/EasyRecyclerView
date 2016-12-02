@@ -2,7 +2,7 @@
 ## **描述**
 这是一个下拉刷新上拉加载更多框架(ps:后期还会加入一些常用的功能.),头部用的秋哥的[android-Ultra-Pull-To-Refresh](https://github.com/liaohuqiu/android-Ultra-Pull-To-Refresh),底部和没有数据的状态自己实现的.其实刚刚开始我是想找个库直接用的,试了几个排名靠前的,感觉跟自己想要的不太一样,索性自己写了一个,当然这当中也遇到了问题,多亏[仲锦大师](https://github.com/chenzj-king)的帮助在此感谢.
 
-#### 特点:
+### 特点:
 - 可定制的头部 (可以查看[android-Ultra-Pull-To-Refresh](https://github.com/liaohuqiu/android-Ultra-Pull-To-Refresh)文档)
 - 可定制的底部 (加载中/没有数据/加载失败 三种状态的定制)
 - 可定制的没有数据状态显示 (目前只有一个状态)
@@ -10,7 +10,7 @@
 </br>
 
 ## **效果预览**
-#### 1.定制头部&定制脚步
+### 1.定制头部&定制脚步
 - 头部秋哥已经定制了很多样式就直接使用了
 - 脚部这边使用的已经实现好的ErvDefaultFooter
 
@@ -23,15 +23,15 @@ material style头部
 ![](http://of1ktyksz.bkt.clouddn.com/erv_material_header.gif)
 </br>
 
-#### 2.头部吸附
+### 2.头部吸附
 ![](http://of1ktyksz.bkt.clouddn.com/erv_custom_decoration.gif)
 </br>
 
 ## **使用方式**
-#### 依赖
+### 依赖
 EasyRecyclerView目前只支持library依赖
 
-#### 配置
+### 配置
 目前有两个参数可以配置
 - app:emply_layout</br>
   没有数据时候布局
@@ -39,7 +39,7 @@ EasyRecyclerView目前只支持library依赖
 - app:number_load_more</br>
   最后可见条目 + number_load_more > total 触发加载更多;默认值为4
 
-#### xml中配置示例  
+### xml中配置示例  
     <com.zly.www.easyrecyclerview.EasyDefRecyclerView
             android:id="@+id/erv"
             android:layout_width="match_parent"
@@ -50,7 +50,7 @@ EasyRecyclerView目前只支持library依赖
 
 
 
-#### activity代码配置
+### activity代码配置
 
     erv.setAdapter(rvAdapter = new RvAdapter());//设置adapter
     erv.setLastUpdateTimeRelateObject(this);//传入参数类名作为记录刷新时间key
@@ -62,7 +62,7 @@ EasyRecyclerView目前只支持library依赖
     erv.setLastUpdateTimeRelateObject(this);//传入参数类名作为记录刷新时间key
 
 
-#### adapter代码配置
+### adapter代码配置
 
 adapter需要实现CommonAdapter或者MultipleAdapter抽象方法
 
@@ -109,14 +109,15 @@ adapter中ViewHolder需要继承BaseViewHolder
 
 
 ## **其他配置**
-#### 头部吸附效果
-    mItemDecoration = new StickItemDecoration(context,dataList) {
-                @Override
-                public String getTag(int position) {
-                    return "吸附头部显示的文字";
-                }
-      }
-    erv.addItemDecoration(mItemDecoration);
+### 头部吸附效果
+
+      mItemDecoration = new StickItemDecoration(context,dataList) {
+                  @Override
+                  public String getTag(int position) {
+                      return "吸附头部显示的文字";
+                  }
+        }
+      erv.addItemDecoration(mItemDecoration);
 
 这里StickItemDecoration提供了如下方法来定制吸附效果
 
