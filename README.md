@@ -107,7 +107,7 @@ adapter中ViewHolder需要继承BaseViewHolder
     //设置吸附文字leftmargin
     public void setStickTextoffset(int mStickTextoffset)
 
-### **自定义**
+## **自定义**
 
 头部使用秋哥的[android-Ultra-Pull-To-Refresh](https://github.com/liaohuqiu/android-Ultra-Pull-To-Refresh)
 秋哥默认已经实现了3个头部
