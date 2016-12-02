@@ -89,6 +89,7 @@ adapter中ViewHolder需要继承BaseViewHolder
 </br>
 
 ## **头部吸附效果**
+
     mItemDecoration = new StickItemDecoration(context,dataList) {
                 @Override
                 public String getTag(int position) {
