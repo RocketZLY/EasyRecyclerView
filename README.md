@@ -39,7 +39,7 @@ EasyRecyclerView目前只支持library依赖
 - app:number_load_more</br>
   最后可见条目 + number_load_more > total 触发加载更多;默认值为4
 
-##### xml中配置示例  
+#### xml中配置示例  
     <com.zly.www.easyrecyclerview.EasyDefRecyclerView
             android:id="@+id/erv"
             android:layout_width="match_parent"
@@ -50,7 +50,7 @@ EasyRecyclerView目前只支持library依赖
 
 
 
-##### activity代码配置
+#### activity代码配置
 
     erv.setAdapter(rvAdapter = new RvAdapter());//设置adapter
     erv.setLastUpdateTimeRelateObject(this);//传入参数类名作为记录刷新时间key
@@ -62,7 +62,7 @@ EasyRecyclerView目前只支持library依赖
     erv.setLastUpdateTimeRelateObject(this);//传入参数类名作为记录刷新时间key
 
 
-##### adapter代码配置
+#### adapter代码配置
 
 adapter需要实现CommonAdapter或者MultipleAdapter抽象方法
 
@@ -109,7 +109,7 @@ adapter中ViewHolder需要继承BaseViewHolder
 
 
 ## **其他配置**
-##### 头部吸附效果
+#### 头部吸附效果
     mItemDecoration = new StickItemDecoration(context,dataList) {
                 @Override
                 public String getTag(int position) {
