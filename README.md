@@ -1,15 +1,17 @@
 # EasyRecyclerView
+</br>
+</br>
 
 ## **描述**
 这是一个下拉刷新上拉加载更多框架(ps:后期还会加入一些常用的功能.),头部用的秋哥的[android-Ultra-Pull-To-Refresh](https://github.com/liaohuqiu/android-Ultra-Pull-To-Refresh),底部和没有数据的状态自己实现的.其实刚刚开始我是想找个库直接用的,试了几个排名靠前的,感觉跟自己想要的不太一样,索性自己写了一个,当然这当中也遇到了问题,多亏[仲锦大师](https://github.com/chenzj-king)的帮助在此感谢.
-
-
 
 #### 特点:
 - 可定制的头部 (可以查看[android-Ultra-Pull-To-Refresh](https://github.com/liaohuqiu/android-Ultra-Pull-To-Refresh)文档)
 - 可定制的底部 (加载中/没有数据/加载失败 三种状态的定制)
 - 可定制的没有数据状态显示 (目前只有一个状态)
 - 目前提供一个实现好的ItemDecoration(头部吸附效果)
+</br>
+</br>
 
 ## **效果预览**
 #### 定制头部&定制脚步
@@ -24,6 +26,8 @@ material style头部
 
 #### 头部吸附
 ![](http://of1ktyksz.bkt.clouddn.com/decoration.gif)
+</br>
+</br>
 
 ## **使用默认头部和底部实现EasyDefRecyclerView**
     <com.zly.www.easyrecyclerview.EasyDefRecyclerView
@@ -84,6 +88,8 @@ MultipleAdapter多条目布局还多一个方法需要实现
 
 
 adapter中ViewHolder需要继承BaseViewHolder
+</br>
+</br>
 
 ## **头部吸附效果**
     mItemDecoration = new StickItemDecoration(context,dataList) {
@@ -106,6 +112,8 @@ adapter中ViewHolder需要继承BaseViewHolder
     public void setStickTextSize(int mStickTextSize)
     //设置吸附文字leftmargin
     public void setStickTextoffset(int mStickTextoffset)
+</br>
+</br>
 
 ## **自定义**
 
@@ -151,18 +159,25 @@ adapter中ViewHolder需要继承BaseViewHolder
     }
 
 实现后调用setFooterView()方法设置
+</br>
+</br>
 
 ## **总结**
 目前还在EasyRecyclerView还在优化欢迎各位提出你们宝贵的意见,例子可以参考Sample
+</br>
+</br>
 
 ## **感谢**
 秋哥的[android-Ultra-Pull-To-Refresh](https://github.com/liaohuqiu/android-Ultra-Pull-To-Refresh)</br>
 [仲锦大师](https://github.com/chenzj-king)的帮助
+</br>
+</br>
 
 ## **联系方式**
 qq:1835556188</br>
 blog:http://blog.csdn.net/zly921112</br>
-
+</br>
+</br>
 
 ## **License**
     Copyright (c) 2016 zhuliyuan
