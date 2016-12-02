@@ -132,43 +132,43 @@ public abstract class StickItemDecoration extends RecyclerView.ItemDecoration {
     public abstract String getTag(int position);
 
 
-    public int getmStickHeight() {
+    public int getStickHeight() {
         return mStickHeight;
     }
 
-    public void setmStickHeight(int mStickHeight) {
+    public void setStickHeight(int mStickHeight) {
         this.mStickHeight = mStickHeight;
     }
 
-    public int getmStickBackgroundColor() {
+    public int getStickBackgroundColor() {
         return mStickBackgroundColor;
     }
 
-    public void setmStickBackgroundColor(int mStickBackgroundColor) {
+    public void setStickBackgroundColor(int mStickBackgroundColor) {
         this.mStickBackgroundColor = mStickBackgroundColor;
     }
 
-    public int getmStickTextColor() {
+    public int getStickTextColor() {
         return mStickTextColor;
     }
 
-    public void setmStickTextColor(int mStickTextColor) {
+    public void setStickTextColor(int mStickTextColor) {
         this.mStickTextColor = mStickTextColor;
     }
 
-    public int getmStickTextSize() {
+    public int getStickTextSize() {
         return mStickTextSize;
     }
 
-    public void setmStickTextSize(int mStickTextSize) {
+    public void setStickTextSize(int mStickTextSize) {
         this.mStickTextSize = mStickTextSize;
     }
 
-    public int getmStickTextoffset() {
+    public int getStickTextoffset() {
         return mStickTextoffset;
     }
 
-    public void setmStickTextoffset(int mStickTextoffset) {
+    public void setStickTextoffset(int mStickTextoffset) {
         this.mStickTextoffset = mStickTextoffset;
     }
 }
