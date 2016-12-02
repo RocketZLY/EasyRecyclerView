@@ -8,6 +8,7 @@ import com.zly.www.easyrecyclerview.EasyDefRecyclerView;
 import com.zly.www.easyrecyclerview.listener.OnLoadListener;
 import com.zly.www.easyrecyclerview.listener.OnRefreshListener;
 import com.zly.www.easyrecyclerview.ptrlib.header.MaterialHeader;
+import com.zly.www.simple.DisplayUtil;
 import com.zly.www.simple.R;
 import com.zly.www.simple.adapter.CustomAdapter;
 
@@ -33,7 +34,9 @@ public class CustomHeaderActivity extends AppCompatActivity implements OnRefresh
         setContentView(R.layout.activity_custom);
         ButterKnife.bind(this);
 
-        erv.setHeaderView(new MaterialHeader(this));
+        MaterialHeader materialHeader = new MaterialHeader(this);
+        materialHeader.setPadding(0, DisplayUtil.dip2px(20),0,DisplayUtil.dip2px(20));
+        erv.setHeaderView(materialHeader);
         erv.setPinContent(true);
         erv.setAdapter(mAdapter = new CustomAdapter());
         erv.setLastUpdateTimeRelateObject(this);
