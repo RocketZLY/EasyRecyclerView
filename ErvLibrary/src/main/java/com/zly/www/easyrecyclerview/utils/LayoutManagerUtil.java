@@ -13,9 +13,9 @@ import static com.zly.www.easyrecyclerview.utils.LayoutManagerUtil.LAYOUT_MANAGE
 
 /**
  * @author chenzj
- * @Description: 类的描述 -
- * @date 2016/10/9 10:36
- * @email admin@chenzhongjin.cn
+ * 类的描述 -
+ * 2016/10/9 10:36
+ * admin@chenzhongjin.cn
  */
 public class LayoutManagerUtil {
 

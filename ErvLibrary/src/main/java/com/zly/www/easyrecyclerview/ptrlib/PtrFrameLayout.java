@@ -737,7 +737,7 @@ public class PtrFrameLayout extends ViewGroup {
     }
 
     /**
-     * The content view will now move when {@param pinContent} set to true.
+     * The content view will now move when {pinContent} set to true.
      *
      * @param pinContent
      */
