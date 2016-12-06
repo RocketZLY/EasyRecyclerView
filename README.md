@@ -29,7 +29,9 @@ material style头部
 
 ## **使用方式**
 ### 依赖
-EasyRecyclerView目前只支持library依赖
+gradle
+
+    compile 'com.zly:easyrecyclerview:1.0.0'  
 
 ### 配置
 目前有两个参数可以配置
