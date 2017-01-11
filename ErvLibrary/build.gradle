@@ -33,8 +33,8 @@ dependencies {
 
 //添加
 publish {
-    userOrg = 'yysauce'//bintray.com用户名
-    groupId = 'com.zly'//jcenter上的路径
+    userOrg = 'zhuliyuan'//bintray.com用户名
+    groupId = 'com.yysauce'//jcenter上的路径
     artifactId = 'easyrecyclerview'//项目名称
     publishVersion = '1.0.0'//版本号
     desc = 'EasyRecyclerView'//描述，不重要
