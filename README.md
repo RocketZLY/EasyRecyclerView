@@ -31,7 +31,7 @@ material style头部
 ### 依赖
 gradle
 
-    compile 'com.zly:easyrecyclerview:1.0.0'  
+    compile 'com.yysauce:easyrecyclerview:1.0.0' 
 
 ### 配置
 目前有两个参数可以配置
